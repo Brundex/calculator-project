@@ -1,0 +1,12 @@
+#content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#calculator {
+    background-color: #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
