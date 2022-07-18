@@ -30,23 +30,38 @@ buttons.forEach(button => {
 });
 
 function populateDisplay() {
-    // If there are no numbers yet, operators should not be used
+    // Allows to replace the operator if misclicked
     if (this.className === 'button operator' && (displayContent.includes('+') ||
         displayContent.includes('-') ||
         displayContent.includes('/') ||
         displayContent.includes('x'))) {
+        //
+        displayContent[displayContent.length - 1] = this.innerHTML;
+        display.textContent = displayContent.join("");
+        console.log(displayContent);
+        operatorIndex = displayContent.indexOf(displayContent[displayContent.length - 1]);
+        console.log(operatorIndex);
+        operator = displayContent[operatorIndex];
+        console.log(operator);
         return
+
     }
     // Only will display numbers, or operators after numbers
     else if (this.className === 'digit button' || displayContent.length > 0) {
         //save operation that is being used
-        if (this.className === 'button operator') {
-            window.currentOperation = this.id;
-            window.index = displayContent.length;
-        }
         displayContent.push(this.innerHTML);
         display.textContent = displayContent.join("");
         console.log(displayContent);
+
+        // save first factor of the operation when an operator button is hit
+        if (this.className === 'button operator') {
+            window.firstFactor = displayContent.slice(0, -1).join("");
+            console.log(`firstFactor: ${firstFactor}`);
+            window.operatorIndex = displayContent.indexOf(displayContent[displayContent.length - 1]);
+            console.log(operatorIndex);
+            const operator = displayContent[operatorIndex];
+            console.log(operator);
+        }
     }
 }
 
