@@ -15,7 +15,7 @@ buttons.forEach(button => {
     button.addEventListener('click', populateDisplay);
 });
 
-// If element meets all conditions it will be displayed
+// If element meets a condition it will be displayed
 function populateDisplay() {
     if (this.className === 'digit button') {
         if(operator === "") {
@@ -31,6 +31,10 @@ function populateDisplay() {
         addToDisplay(this.innerHTML, displayArr);
     }
     else if (this.className === 'button operator') {
+        // Works as the equal button if an operator is pressed after valid operation
+        if (operator !== "" && inputA !== "" && inputB !== ""){
+            getResult();
+        }
         if (operator === "" && displayArr.length > 0) {
             addToDisplay(this.innerHTML, displayArr);
             saveInputAndOperator(this);
@@ -39,6 +43,7 @@ function populateDisplay() {
             return
          }
     }
+    // Floats can only be input once for each factor
     else if (this.id === 'float') {
         if (operator==="" && !inputA.includes(".")) {
             inputA+=".";
