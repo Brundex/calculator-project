@@ -7,7 +7,6 @@ let inputA = "";
 let inputB = "";
 let operator = "";
 let displayArr = [];
-let floatActive = false;
 
 
 buttons.forEach(button => {
@@ -33,7 +32,6 @@ function populateDisplay() {
         if (operator === "" && displayArr.length > 0) {
             addToDisplay(this.innerHTML, displayArr);
             saveInputAndOperator(this);
-            floatActive = false;
             return
         } else { 
             return
@@ -43,12 +41,10 @@ function populateDisplay() {
         if (operator==="" && !inputA.includes(".")) {
             inputA+=".";
             addToDisplay(this.innerHTML, displayArr);
-            floatActive = true;
         }
         else if (operator !== "" && !inputB.includes(".")) {
             inputB+=".";
             addToDisplay(this.innerHTML, displayArr);
-            floatActive = true;
         }    
     }
 
