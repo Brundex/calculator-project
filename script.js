@@ -1,6 +1,7 @@
 const display = document.getElementById('display');
 const buttons = document.querySelectorAll('.button');
 const clear = document.getElementById('clear');
+const equal = document.getElementById('equal');
 
 let inputA = "";
 let inputB = "";
@@ -26,16 +27,29 @@ function populateDisplay() {
             console.log("inputB is:");
             console.log(inputB);
         }
-        addToDisplay(this, displayArr);
+        addToDisplay(this.innerHTML, displayArr);
     }
     else if (this.className === 'button operator') {
-        if (operator === "") {
-            addToDisplay(this, displayArr);
+        if (operator === "" && displayArr.length > 0) {
+            addToDisplay(this.innerHTML, displayArr);
             saveInputAndOperator(this);
+            floatActive = false;
             return
         } else { 
             return
          }
+    }
+    else if (this.id === 'float') {
+        if (operator==="" && !inputA.includes(".")) {
+            inputA+=".";
+            addToDisplay(this.innerHTML, displayArr);
+            floatActive = true;
+        }
+        else if (operator !== "" && !inputB.includes(".")) {
+            inputB+=".";
+            addToDisplay(this.innerHTML, displayArr);
+            floatActive = true;
+        }    
     }
 
     console.log("Display is showing:")
@@ -43,17 +57,32 @@ function populateDisplay() {
 }
 
 function addToDisplay(element, inputArr) {
-    inputArr.push(element.innerHTML);
+    inputArr.push(element);
     display.textContent = inputArr.join("");
 }
 
 function saveInputAndOperator(element) {
-    inputA = firstFactor = displayArr.slice(0, -1);
-    operator = element.innerHTML;
+    inputA = displayArr.slice(0, -1).join("");
+    operator = element.id;
     console.log(inputA)
     
     floatActive = false;
 }
+
+equal.addEventListener('click', getResult);
+
+function getResult() {
+    result = operate(operator, Number(inputA), Number(inputB)).toString();
+    displayArr.length = 0;
+    [...result].forEach(letter => displayArr.push(letter));
+    display.textContent = displayArr.join("");
+
+    inputA = displayArr.join("");
+    inputB = "";
+    operator = "";
+}   
+
+
 
 
 
@@ -65,6 +94,7 @@ function clearCalc() {
     operator = "";
     inputA = "";
     inputB = "";
+    floatActive = false;
 }
 
 
