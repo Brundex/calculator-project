@@ -1,4 +1,73 @@
-// Operation functions
+const display = document.getElementById('display');
+const buttons = document.querySelectorAll('.button');
+const clear = document.getElementById('clear');
+
+let inputA = "";
+let inputB = "";
+let operator = "";
+let displayArr = [];
+let floatActive = false;
+
+
+buttons.forEach(button => {
+    button.addEventListener('click', populateDisplay);
+});
+
+// If element meets all conditions it will be displayed
+function populateDisplay() {
+    if (this.className === 'digit button') {
+        if(operator === "") {
+            inputA += this.id;
+            console.log("input A is:");
+            console.log(inputA);
+        }
+        else {
+            inputB += this.id;
+            console.log("inputB is:");
+            console.log(inputB);
+        }
+        addToDisplay(this, displayArr);
+    }
+    else if (this.className === 'button operator') {
+        if (operator === "") {
+            addToDisplay(this, displayArr);
+            saveInputAndOperator(this);
+            return
+        } else { 
+            return
+         }
+    }
+
+    console.log("Display is showing:")
+    console.log(displayArr);
+}
+
+function addToDisplay(element, inputArr) {
+    inputArr.push(element.innerHTML);
+    display.textContent = inputArr.join("");
+}
+
+function saveInputAndOperator(element) {
+    inputA = firstFactor = displayArr.slice(0, -1);
+    operator = element.innerHTML;
+    console.log(inputA)
+    
+    floatActive = false;
+}
+
+
+
+clear.addEventListener('click', clearCalc);
+
+function clearCalc() {
+    displayArr = [];
+    display.textContent = "";
+    operator = "";
+    inputA = "";
+    inputB = "";
+}
+
+
 function add(num1, num2) {
     return num1 + num2
 }
@@ -15,67 +84,16 @@ function divide(num1, num2) {
     return num1 / num2
 }
 
-function operate(operator, num1, num2) {
-    console.log(operator(num1, num2))
-}
-
-// Populate display
-const displayContent = [];
-
-const display = document.getElementById('display');
-const buttons = document.querySelectorAll('.button');
-
-buttons.forEach(button => {
-    button.addEventListener('click', populateDisplay);
-});
-
-function populateDisplay() {
-    // Allows to replace the operator if misclicked
-    if (this.className === 'button operator' && (displayContent.includes('+') ||
-        displayContent.includes('-') ||
-        displayContent.includes('/') ||
-        displayContent.includes('x'))) {
-        //
-        displayContent[displayContent.length - 1] = this.innerHTML;
-        display.textContent = displayContent.join("");
-        console.log(displayContent);
-        operatorIndex = displayContent.indexOf(displayContent[displayContent.length - 1]);
-        console.log(operatorIndex);
-        operator = displayContent[operatorIndex];
-        console.log(operator);
-        return
-
-    }
-    // Only will display numbers, or operators after numbers
-    else if (this.className === 'digit button' || displayContent.length > 0) {
-        //save operation that is being used
-        displayContent.push(this.innerHTML);
-        display.textContent = displayContent.join("");
-        console.log(displayContent);
-
-        // save first factor of the operation when an operator button is hit
-        if (this.className === 'button operator') {
-            window.firstFactor = displayContent.slice(0, -1).join("");
-            console.log(`firstFactor: ${firstFactor}`);
-            window.operatorIndex = displayContent.indexOf(displayContent[displayContent.length - 1]);
-            console.log(operatorIndex);
-            const operator = displayContent[operatorIndex];
-            console.log(operator);
-        }
+function operate(mathOperator, num1, num2) {
+    switch (mathOperator) {
+        case "add":
+            return Math.round(add(num1, num2) * 100000) / 100000;
+        case "substract":
+                return Math.round(substract(num1, num2) * 100000) / 100000;
+        case "multiply":
+            return Math.round(multiply(num1, num2) * 100000) / 100000;
+        case "divide":
+            if (Number(num2) === 0) {alert("Error");}
+            return Math.round(divide(num1, num2) * 100000) / 100000;
     }
 }
-
-// Use operate function when pressing "="
-const equal = document.getElementById('equal');
-
-// function equalBehavior {
-//     if (!displayContent.length) 
-//     const firstFactor = displayContent.slice(0, index); 
-// }
-// const firstFactor = displayContent.slice(0, index);
-// console.log(firstFactor);
-// const secondFactor = 10;
-// Condiciones para que funcione el equal:
-// si no hay nada, display muestra 0
-// si solo hay numero, sin index 
-// equal.addEventListener('click', operate(currentOperation, firstFactor, secondFactor))   

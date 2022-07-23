@@ -1,3 +1,7 @@
+* {
+    color: #fff;    
+}
+
 body {
     background-image: url(background.jpg);
 }
@@ -14,11 +18,11 @@ body {
     box-shadow: 5px 5px rgb(61, 61, 69);
     border: 2px solid black;
     border-radius: 2%;
-    background-color: #ddd;
+    background-color: rgb(62, 60, 84);
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 28px;
+    padding: 34px;
 }
 
 #display {
@@ -28,7 +32,7 @@ body {
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
-    background-color: white;
+    background-color: rgb(162, 158, 158);
     height: 150px;
     width: 100%;
     max-width: 100%;
@@ -44,16 +48,30 @@ body {
     flex-direction: column;
 }
 
-.double {
+
+
+#clear {
     border: 2px solid black;
     border-radius: 8%;
     display: flex;
     align-items: center;
     justify-content: center;
-    grid-column: span 2;
+    grid-column: span 4;
     text-align: center;
-    background-color: #bbb;
     height: 75px;
+    background-color: rgb(153, 91, 67);
+}
+
+#clear:hover {
+    background-color: rgb(204, 118, 84);
+
+}
+
+
+
+#delete:hover {
+    background-color: rgb(173, 148, 84);
+
 }
 
 #buttons {
@@ -72,7 +90,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #bbb;
+    background-color: rgb(121, 118, 118);
     width: 85px;
     height: 75px;
 }
