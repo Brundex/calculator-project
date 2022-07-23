@@ -1,3 +1,5 @@
+const CALC_WIDTH = 18;
+const ROUND = 10000;
 const display = document.getElementById('display');
 const buttons = document.querySelectorAll('.button');
 const clear = document.getElementById('clear');
@@ -53,6 +55,11 @@ function populateDisplay() {
 }
 
 function addToDisplay(element, inputArr) {
+    if (displayArr.length >= CALC_WIDTH){
+        alert("Error");
+        clearCalc();
+        return
+    }
     inputArr.push(element);
     display.textContent = inputArr.join("");
 }
@@ -65,9 +72,20 @@ function saveInputAndOperator(element) {
     floatActive = false;
 }
 
+
 equal.addEventListener('click', getResult);
 
 function getResult() {
+    if (inputA === "" || !operator) {
+        display.textContent = inputA;
+        return
+    }
+    if (!inputB) {
+        display.textContent = inputA;
+        operator = "";
+        displayArr.pop();
+        return
+    }
     result = operate(operator, Number(inputA), Number(inputB)).toString();
     displayArr.length = 0;
     [...result].forEach(letter => displayArr.push(letter));
@@ -79,9 +97,6 @@ function getResult() {
 }   
 
 
-
-
-
 clear.addEventListener('click', clearCalc);
 
 function clearCalc() {
@@ -90,7 +105,6 @@ function clearCalc() {
     operator = "";
     inputA = "";
     inputB = "";
-    floatActive = false;
 }
 
 
@@ -119,7 +133,11 @@ function operate(mathOperator, num1, num2) {
         case "multiply":
             return Math.round(multiply(num1, num2) * 100000) / 100000;
         case "divide":
-            if (Number(num2) === 0) {alert("Error");}
-            return Math.round(divide(num1, num2) * 100000) / 100000;
+            if (Number(num2) === 0) {
+                alert("Error");
+                clearCalc();
+                return
+            }
+            return Math.round(divide(num1, num2) * ROUND) / ROUND;
     }
 }
