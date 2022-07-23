@@ -20,13 +20,9 @@ function populateDisplay() {
     if (this.className === 'digit button') {
         if(operator === "") {
             inputA += this.id;
-            console.log("input A is:");
-            console.log(inputA);
         }
         else {
             inputB += this.id;
-            console.log("inputB is:");
-            console.log(inputB);
         }
         addToDisplay(this.innerHTML, displayArr);
     }
@@ -54,9 +50,6 @@ function populateDisplay() {
             addToDisplay(this.innerHTML, displayArr);
         }    
     }
-
-    console.log("Display is showing:")
-    console.log(displayArr);
 }
 
 function addToDisplay(element, inputArr) {
@@ -71,9 +64,7 @@ function addToDisplay(element, inputArr) {
 
 function saveInputAndOperator(element) {
     inputA = displayArr.slice(0, -1).join("");
-    operator = element.id;
-    console.log(inputA)
-    
+    operator = element.id;    
     floatActive = false;
 }
 
